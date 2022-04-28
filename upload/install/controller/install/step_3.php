@@ -167,6 +167,12 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['error_db_prefix'] = '';
 		}
+		
+		if (isset($this->error['db_password'])) {
+			$data['error_db_password'] = $this->error['db_password'];
+		} else {
+			$data['error_db_password'] = '';
+		}
 
 		if (isset($this->error['username'])) {
 			$data['error_username'] = $this->error['username'];
@@ -304,10 +310,14 @@ class Step3 extends \Opencart\System\Engine\Controller {
 		if (!in_array($this->request->post['db_driver'], $db_drivers)) {
 			$this->error['db_driver'] = $this->language->get('error_db_driver');
 		} else {
-			try {
-				$db = new \Opencart\System\Library\DB($this->request->post['db_driver'], html_entity_decode($this->request->post['db_hostname'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_username'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_database'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_port']);
-			} catch (\Exception $e) {
-				$this->error['warning'] = $e->getMessage();
+			if(!isset($this->request->post['db_password']) || !$this->request->post['db_password']) {
+				$this->error['db_password'] = $this->language->get('error_db_password');
+			} else {
+				try {
+					$db = new \Opencart\System\Library\DB($this->request->post['db_driver'], html_entity_decode($this->request->post['db_hostname'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_username'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8'), html_entity_decode($this->request->post['db_database'], ENT_QUOTES, 'UTF-8'), $this->request->post['db_port']);
+				} catch (\Exception $e) {
+					$this->error['warning'] = $e->getMessage();
+				}
 			}
 		}
 

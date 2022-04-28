@@ -56,6 +56,9 @@
                   </div>
                   <div class="form-group col">
                     <label for="input-db-password" class="col-form-label">{{ entry_db_password }}</label> <input type="password" name="db_password" value="{{ db_password }}" id="input-db-password" class="form-control"/>
+					{% if error_db_password %}
+                      <div class="text-danger">{{ error_db_password }}</div>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="form-row">
