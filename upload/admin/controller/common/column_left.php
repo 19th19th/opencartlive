@@ -132,14 +132,6 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			// Extension
 			$marketplace = [];
 
-			if ($this->user->hasPermission('access', 'marketplace/marketplace')) {
-				$marketplace[] = [
-					'name'	   => $this->language->get('text_marketplace'),
-					'href'     => $this->url->link('marketplace/marketplace', 'user_token=' . $this->session->data['user_token']),
-					'children' => []
-				];
-			}
-
 			if ($this->user->hasPermission('access', 'marketplace/installer')) {
 				$marketplace[] = [
 					'name'	   => $this->language->get('text_installer'),
